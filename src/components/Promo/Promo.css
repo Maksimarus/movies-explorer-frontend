@@ -1,0 +1,44 @@
+.promo {
+  background-color: #073042;
+  color: #fff;
+}
+
+.promo__container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 149px 10px 75px;
+}
+
+.promo__info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.promo__text {
+  max-width: 640px;
+}
+
+.promo__title {
+  font-weight: 400;
+  font-size: 50px;
+  margin: 0 0 36px 0;
+}
+
+.promo__desc {
+  max-width: 310px;
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+.promo__image {
+  width: 310px;
+  height: 304px;
+}
+
+.promo__btn {
+  display: inline-block;
+  font-size: 12px;
+  padding: 10px 20px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+}

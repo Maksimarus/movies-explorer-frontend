@@ -1,0 +1,25 @@
+.auth-nav__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-nav__item {
+  color: #fff;
+  font-size: 14px;
+  line-height: calc(18 / 14);
+}
+
+.auth-nav__item:not(:last-child) {
+  margin-right: 20px;
+}
+
+.auth-nav__item_type_account {
+  margin-left: 30px;
+  border-radius: 20px;
+  background-color: #313131;
+  padding: 8px 20px;
+}

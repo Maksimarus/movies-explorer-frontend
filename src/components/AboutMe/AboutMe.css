@@ -1,0 +1,50 @@
+.aboutMe {
+  background-color: #202020;
+  color: #fff;
+}
+
+.aboutMe__container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 100px 0 110px 0;
+}
+
+.aboutMe__title {
+  margin: 0 0 66px 0;
+}
+
+.aboutMe__content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.aboutMe__text {
+  max-width: 600px;
+}
+
+.aboutMe__name {
+  font-size: 50px;
+  margin: 0 0 18px 0;
+}
+
+.aboutMe__work {
+  font-size: 18px;
+  margin: 0 0 26px 0;
+}
+
+.aboutMe__desc {
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0 0 99px 0;
+}
+
+.aboutMe__link {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.aboutMe__photo {
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+}
