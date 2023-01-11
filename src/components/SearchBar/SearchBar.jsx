@@ -1,19 +1,20 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import Checkbox from '../UI/Checkbox/Checkbox';
 import './SearchBar.css';
 
 function SearchBar() {
   return (
     <div className="search-bar">
-      <form>
-        <div>
-          <input type="submit" />
-          <button type="submit">123</button>
-        </div>
-        <div>
-          <label htmlFor="movieLength">
-            <input id="movieLength" type="checkbox" />
-            Короткометражки
-          </label>
-        </div>
+      <form className="search-bar__form">
+        <fieldset className="search-bar__container">
+          <input
+            className="search-bar__input"
+            type="text"
+            placeholder="Фильм"
+          />
+          <button className="search-bar__button" type="submit" />
+        </fieldset>
+        <Checkbox />
       </form>
     </div>
   );
