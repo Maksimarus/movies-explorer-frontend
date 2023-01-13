@@ -7,22 +7,20 @@ function Movies() {
   return (
     <Layout>
       <section className="movies">
-        <div className="movies__container">
-          <SearchBar />
-          <ul className="movies__list">
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-          </ul>
-          <button className="movies__show-more-button" type="button">
-            Ещё
-          </button>
-        </div>
+        <SearchBar />
+        <ul className="movies__list">
+          <Movie />
+          <Movie />
+          <Movie />
+          <Movie />
+          <Movie />
+          <Movie />
+          <Movie />
+          <Movie />
+        </ul>
+        <button className="movies__show-more-button" type="button">
+          Ещё
+        </button>
       </section>
     </Layout>
   );

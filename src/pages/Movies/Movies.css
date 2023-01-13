@@ -1,9 +1,5 @@
 .movies {
-  background-color: #202020;
   color: #fff;
-}
-
-.movies__container {
   max-width: 1140px;
   margin: 0 auto;
 }

@@ -1,7 +1,7 @@
-import Auth from '../../components/Auth/Auth';
-import MyInput from '../../components/UI/MyInput/MyInput';
-import MyButton from '../../components/UI/MyButton/MyButton';
-import MyLink from '../../components/UI/MyLink/MyLink';
+import Auth from '../components/Auth/Auth';
+import MyInput from '../components/UI/MyInput/MyInput';
+import MyButton from '../components/UI/MyButton/MyButton';
+import MyLink from '../components/UI/MyLink/MyLink';
 
 function Login() {
   return (
