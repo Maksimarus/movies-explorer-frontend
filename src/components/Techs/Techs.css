@@ -6,7 +6,7 @@
 .techs__container {
   max-width: 1140px;
   margin: 0 auto;
-  padding: 100px 0px;
+  padding: 100px 10px;
 }
 
 .techs__title {
@@ -30,6 +30,7 @@
   margin: 0 0 100px 0;
   font-size: 14px;
   text-align: center;
+  line-height: calc(20 / 14);
 }
 
 .techs-list {
@@ -52,4 +53,26 @@
 
 .techs-list__item:not(:last-child) {
   margin-right: 10px;
+}
+
+@media screen and (max-width: 950px) {
+  .techs__container {
+    max-width: 668px;
+    padding: 90px 10px;
+  }
+  .techs__title {
+    margin-bottom: 80px;
+  }
+  .techs__header {
+    margin-bottom: 22px;
+  }
+  .techs__desc {
+    margin-bottom: 83px;
+    font-size: 12px;
+  }
+  .techs-list__item {
+    width: 84px;
+    height: 57px;
+    font-size: 12px;
+  }
 }

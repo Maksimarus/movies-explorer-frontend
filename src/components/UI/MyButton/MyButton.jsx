@@ -1,26 +1,28 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './MyButton.css';
 
-function MyButton({ children, cn, type, ...props }) {
+function MyButton({ children, className, ...props }) {
+  const classes = classNames('my-button', className);
+
   return (
     // eslint-disable-next-line react/button-has-type
-    <button type={type} {...props} className={`my-button ${cn}`}>
+    <button {...props} className={classes}>
       {children}
     </button>
   );
 }
 
-MyButton.defaultProps = {
-  type: 'button',
-  cn: '',
-  children: null,
+MyButton.propTypes = {
+  className: PropTypes.string,
+  // children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  children: PropTypes.node,
 };
 
-MyButton.propTypes = {
-  type: PropTypes.string,
-  cn: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+MyButton.defaultProps = {
+  className: '',
+  children: 'button',
 };
 
 export default MyButton;

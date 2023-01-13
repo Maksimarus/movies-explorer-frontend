@@ -1,67 +1,91 @@
 .about {
-  background-color: #202020;
-}
-
-.about__container {
   max-width: 1140px;
   margin: 0 auto;
-  padding: 110px 0;
+  padding: 110px 10px 110px;
 }
 
 .about__title {
   margin: 0 0 70px 0;
 }
 
-.about__desc {
+.about__description {
   display: flex;
   justify-content: space-between;
   color: #fff;
   margin-bottom: 110px;
 }
 
-.desc {
+.project-desc {
   max-width: 550px;
 }
 
-.desc__title {
+.project-desc:not(:last-child) {
+  margin-right: 40px;
+}
+
+.project-desc__title {
   font-size: 20px;
   margin: 0 0 26px 0;
 }
 
-.desc__text {
+.project-desc__text {
   font-size: 14px;
   margin: 0;
 }
 
-.weeks {
+.table {
   display: flex;
 }
 
-.weeks__one {
+.table__item {
+  text-align: center;
+}
+
+.table__item_count_one {
   flex: 1;
-  text-align: center;
 }
 
-.weeks__four {
+.table__item_count_four {
   flex: 4;
-  text-align: center;
 }
 
-.weeks__back {
+.table__week {
   padding: 9px 0;
-  background-color: #3ddc84;
+  margin-bottom: 14px;
   font-size: 14px;
+}
+
+.table__week_items_one {
+  background-color: #3ddc84;
   color: #000;
 }
 
-.weeks__front {
-  padding: 9px 0;
+.table__week_items_four {
   background-color: #303030;
-  font-size: 14px;
   color: #fff;
 }
 
-.weeks__text {
+.table__text {
+  margin: 0;
   font-size: 14px;
   color: #8b8b8b;
+}
+
+@media screen and (max-width: 950px) {
+  .about {
+    max-width: 668px;
+    padding: 90px 10px;
+  }
+  .about__description {
+    margin-bottom: 93px;
+  }
+  .project-desc:not(:last-child) {
+    margin-right: 30px;
+  }
+  .project-desc__title {
+    margin-bottom: 22px;
+  }
+  .project-desc__text {
+    font-size: 12px;
+  }
 }

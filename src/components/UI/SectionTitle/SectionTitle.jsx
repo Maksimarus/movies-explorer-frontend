@@ -1,18 +1,21 @@
 import './SectionTitle.css';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
-function SectionTitle({ children, cn }) {
-  return <h2 className={`section-title ${cn}`}>{children}</h2>;
+function SectionTitle({ children, className }) {
+  const classes = classNames('section-title', className);
+
+  return <h2 className={classes}>{children}</h2>;
 }
 
 SectionTitle.defaultProps = {
-	cn: '',
-	children: null,
-}
+  className: '',
+  children: null,
+};
 
 SectionTitle.propTypes = {
-	cn: PropTypes.string,
-	children: PropTypes.string,
-}
+  className: PropTypes.string,
+  children: PropTypes.string,
+};
 
 export default SectionTitle;

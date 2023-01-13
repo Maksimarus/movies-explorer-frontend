@@ -1,0 +1,10 @@
+1) 1-й медиа запрос 950px {
+	header: max-width: 708px;
+	main: max-width: 668px;
+	footer: max-width: 708px;
+}
+2) 2-й медиа запрос 700px {
+	header: max-width: 550px;
+	main: max-width: 530px;
+	footer: max-width: 550px;
+}

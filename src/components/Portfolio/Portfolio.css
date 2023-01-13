@@ -1,12 +1,8 @@
 .portfolio {
-  background-color: #202020;
-  color: #fff;
-}
-
-.portfolio__container {
   max-width: 1140px;
-  margin: 0 auto;
-  padding-bottom: 125px;
+  margin: 0 auto 125px auto;
+  padding: 0 10px;
+  color: #fff;
 }
 
 .portfolio__title {
@@ -14,6 +10,12 @@
   font-size: 18px;
   font-weight: 400;
   margin: 0 0 50px 0;
+}
+
+.portfolio__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .portfolio__item {
@@ -36,6 +38,15 @@
 
 .portfolio__text {
   font-size: 30px;
-  line-height: calc(50px / 30px);
+  line-height: calc(50 / 30);
   margin: 0;
+}
+
+@media screen and (max-width: 950px) {
+  .portfolio {
+    max-width: 668px;
+  }
+  .portfolio__text {
+    font-size: 28px;
+  }
 }

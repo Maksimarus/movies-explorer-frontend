@@ -1,5 +1,6 @@
 import './Promo.css';
 import heroImage from '../../images/hero-image.png';
+import MyButton from '../UI/MyButton/MyButton';
 
 function Promo() {
   return (
@@ -17,7 +18,7 @@ function Promo() {
           </div>
           <img className="promo__image" src={heroImage} alt="" />
         </div>
-        <p className="promo__btn">Узнать больше</p>
+        <MyButton className="promo__btn">Узнать больше</MyButton>
       </div>
     </section>
   );

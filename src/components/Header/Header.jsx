@@ -1,7 +1,7 @@
 import './Header.css';
 import logo from '../../images/icons/logo.svg';
-// import Navigation from '../Navigation/Navigation';
-import AuthNavigation from '../AuthNavigation/AuthNavigation';
+import Navigation from '../Navigation/Navigation';
+// import AuthNavigation from '../AuthNavigation/AuthNavigation';
 import MyLink from '../UI/MyLink/MyLink';
 
 function Header() {
@@ -10,8 +10,8 @@ function Header() {
       <MyLink link="/">
         <img className="header__logo" src={logo} alt="Логотип" />
       </MyLink>
-      {/* <Navigation /> */}
-      <AuthNavigation />
+      <Navigation />
+      {/* <AuthNavigation /> */}
     </header>
   );
 }
