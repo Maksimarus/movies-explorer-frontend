@@ -4,20 +4,17 @@ import AboutProject from '../../components/AboutProject/AboutProject';
 import Techs from '../../components/Techs/Techs';
 import AboutMe from '../../components/AboutMe/AboutMe';
 import Portfolio from '../../components/Portfolio/Portfolio';
-import Footer from '../../components/Footer/Footer';
+import Layout from '../../components/Layout/Layout';
 
 function Main() {
   return (
-    <>
-      <main>
-        <Promo />
-        <AboutProject />
-        <Techs />
-        <AboutMe />
-        <Portfolio />
-      </main>
-      <Footer />
-    </>
+    <Layout>
+      <Promo />
+      <AboutProject />
+      <Techs />
+      <AboutMe />
+      <Portfolio />
+    </Layout>
   );
 }
 

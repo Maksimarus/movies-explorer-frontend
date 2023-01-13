@@ -9,8 +9,8 @@
 }
 
 .movies__list {
-  padding: 0;
-  margin: 0 0 10px 0;
+  padding: 0 0 10px 0;
+  margin: 0;
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, 270px);
@@ -18,13 +18,9 @@
   justify-content: center;
 }
 
-.show-more {
-  padding: 50px 0 80px 0;
-  display: flex;
-}
-
-.show-more__button {
+.movies__show-more-button {
   width: 100%;
+  margin: 50px 0 80px 0;
   padding: 11px;
   border: none;
   border-radius: 6px;
@@ -36,6 +32,6 @@
   transition: opacity 0.3s ease;
 }
 
-.show-more__button:hover {
+.movies__show-more-button:hover {
   opacity: 0.8;
 }

@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
 import './MyButton.css';
 
-function MyButton({ children, cn, type }) {
+function MyButton({ children, cn, type, ...props }) {
   return (
     // eslint-disable-next-line react/button-has-type
-    <button type={type} className={`my-button ${cn}`}>
+    <button type={type} {...props} className={`my-button ${cn}`}>
       {children}
     </button>
   );

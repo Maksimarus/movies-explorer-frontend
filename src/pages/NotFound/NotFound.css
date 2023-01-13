@@ -1,4 +1,4 @@
-.notFound {
+.not-found {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -9,25 +9,25 @@
   position: relative;
 }
 
-.notFound__container {
+.not-found__container {
   max-width: 1140px;
   margin: 0 auto;
   text-align: center;
 }
 
-.notFound__title {
+.not-found__title {
   font-size: 140px;
   line-height: calc(169 / 140);
   margin: 0 0 5px 0;
 }
 
-.notFound__desc {
+.not-found__desc {
   margin: 0;
   font-size: 16px;
   line-height: calc(19 / 16);
 }
 
-.notFound__button {
+.not-found__button {
   color: #4285f4;
   font-size: 14px;
   position: absolute;
