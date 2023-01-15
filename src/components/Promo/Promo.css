@@ -76,3 +76,36 @@
     max-width: 260px;
   }
 }
+
+@media screen and (max-width: 700px) {
+  .promo__container {
+    max-width: 550px;
+    padding: 164px 14px 50px;
+  }
+  .promo__info {
+    margin-bottom: 80px;
+  }
+  .promo__image {
+    width: 260px;
+    height: 255px;
+    margin-bottom: 44px;
+  }
+  .promo__title {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .promo__container {
+    max-width: 100%;
+    padding: 144px 14px 30px;
+  }
+  .promo__image {
+    width: 210px;
+    height: 206px;
+  }
+  .promo__title {
+    margin-bottom: 24px;
+    letter-spacing: -0.04em;
+  }
+}

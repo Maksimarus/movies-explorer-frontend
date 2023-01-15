@@ -23,3 +23,12 @@
   padding: 8px 20px;
   color: #000;
 }
+
+@media screen and (max-width: 510px) {
+  .nav__item {
+    font-size: 10px;
+  }
+  .nav__item:not(:last-child) {
+    margin-right: 14px;
+  }
+}

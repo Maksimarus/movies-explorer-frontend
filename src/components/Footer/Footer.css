@@ -17,9 +17,11 @@
 .footer__desc {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .footer__year {
+  margin: 0;
   font-size: 13px;
 }
 
@@ -49,5 +51,41 @@
 @media screen and (max-width: 950px) {
   .footer {
     max-width: 708px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .footer {
+    max-width: 550px;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .footer {
+    max-width: 100%;
+  }
+  .footer__title {
+    font-size: 12px;
+    margin-bottom: 30px;
+  }
+  .footer__desc {
+    flex-direction: column-reverse;
+  }
+  .footer__year {
+    font-size: 12px;
+  }
+  .footer__list {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  .footer__item:not(:last-child) {
+    margin: 0 0 12px 0;
+  }
+  .footer__link {
+    font-size: 12px;
+  }
+  .footer__year {
+    color: #8b8b8b;
   }
 }
