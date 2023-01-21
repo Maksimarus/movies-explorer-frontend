@@ -1,18 +1,39 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import classNames from 'classnames';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import Burger from '../UI/Burger/Burger';
 import './AuthNavigation.css';
-import MyLink from '../UI/MyLink/MyLink';
 
 function AuthNavigation() {
+  const [isVisibleMenu, setIsVisibleMenu] = useState(false);
+  const onClickBurger = () => {
+    setIsVisibleMenu((prev) => !prev);
+  };
+
   return (
     <nav className="auth-nav">
-      <ul className="auth-nav__list">
-        <li className="auth-nav__item">
-          <MyLink link="/movies">Фильмы</MyLink>
+      <Burger onClickBurger={onClickBurger} isVisibleMenu={isVisibleMenu} />
+      <ul className={classNames('menu', { active: isVisibleMenu })}>
+        <li className="menu__item">
+          <NavLink className="menu__link" to="/">
+            Главная
+          </NavLink>
         </li>
-        <li className="auth-nav__item">
-          <MyLink link="/saved-movies">Сохранённые фильмы</MyLink>
+        <li className="menu__item">
+          <NavLink className="menu__link" to="/movies">
+            Фильмы
+          </NavLink>
         </li>
-        <li className="auth-nav__item auth-nav__item_type_account">
-          <MyLink link="/profile">Аккаунт</MyLink>
+        <li className="menu__item">
+          <NavLink className="menu__link" to="/saved-movies">
+            Сохранённые фильмы
+          </NavLink>
+        </li>
+        <li className="menu__item menu__item_type_account">
+          <NavLink className="menu__link" to="/profile">
+            Аккаунт
+          </NavLink>
         </li>
       </ul>
     </nav>

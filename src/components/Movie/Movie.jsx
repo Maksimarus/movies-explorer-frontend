@@ -23,7 +23,7 @@ function Movie() {
           </svg>
         </button>
       </div>
-      <div className="movie__duration">1ч42м</div>
+      <p className="movie__duration">1ч42м</p>
     </li>
   );
 }

@@ -14,7 +14,7 @@ function SearchBar() {
           />
           <button className="search-bar__button" type="submit" />
         </fieldset>
-        <Checkbox />
+        <Checkbox className="search-bar__checkbox" />
       </form>
     </div>
   );

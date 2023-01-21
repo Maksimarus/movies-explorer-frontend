@@ -9,12 +9,12 @@ function Login() {
       <MyInput required type="text" label="E-mail" />
       <MyInput required type="password" label="Пароль" />
       <div className="auth__controls">
-        <MyButton type="submit" cn="auth__button">
+        <MyButton type="submit" className="auth__button">
           Войти
         </MyButton>
         <p className="auth__text">
           Ещё не зарегистрированы?
-          <MyLink cn="auth__link" link="/signup">
+          <MyLink className="auth__link" to="/signup">
             Регистрация
           </MyLink>
         </p>

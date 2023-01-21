@@ -16,7 +16,6 @@ function MyButton({ children, className, ...props }) {
 
 MyButton.propTypes = {
   className: PropTypes.string,
-  // children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   children: PropTypes.node,
 };
 

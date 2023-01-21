@@ -57,3 +57,21 @@
 .checkbox__input:focus + .checkbox__visible {
   box-shadow: 0 0 5px #3ddc84;
 }
+
+@media screen and (max-width: 700px) {
+  .checkbox {
+    flex-direction: row-reverse;
+  }
+  .checkbox__text {
+    margin-right: 13px;
+  }
+  .checkbox__visible {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .checkbox__text {
+    font-size: 11px;
+  }
+}

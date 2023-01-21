@@ -6,13 +6,11 @@ import logo from '../../images/icons/logo.svg';
 function Auth({ children, title }) {
   return (
     <section className="auth">
-      <div className="auth__container">
-        <MyLink link="/">
-          <img className="auth__logo" src={logo} alt="Логотип" />
-        </MyLink>
-        <h2 className="auth__title">{title}</h2>
-        <form className="auth__form">{children}</form>
-      </div>
+      <MyLink to="/" className="auth__logo">
+        <img src={logo} alt="Логотип" />
+      </MyLink>
+      <h2 className="auth__title">{title}</h2>
+      <form className="auth__form">{children}</form>
     </section>
   );
 }
@@ -25,8 +23,8 @@ Auth.defaultProps = {
 Auth.propTypes = {
   title: PropTypes.string,
   children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
   ]),
 };
 

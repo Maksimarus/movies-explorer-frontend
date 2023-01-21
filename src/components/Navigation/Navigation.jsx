@@ -6,10 +6,10 @@ function Navigation() {
     <nav className="nav">
       <ul className="nav__list">
         <li className="nav__item">
-          <MyLink link="/signup">Регистрация</MyLink>
+          <MyLink to="/signup">Регистрация</MyLink>
         </li>
         <li className="nav__item nav__item_type_auth">
-          <MyLink link="/signin">Войти</MyLink>
+          <MyLink to="/signin">Войти</MyLink>
         </li>
       </ul>
     </nav>

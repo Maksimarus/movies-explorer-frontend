@@ -5,15 +5,16 @@
 }
 
 .movie__image {
-  width: 270px;
-  height: 151px;
   margin-bottom: 14px;
+  object-fit: cover;
 }
 
 .movie__desc {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
+  padding-bottom: 25px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #424242;
 }
 
 .movie__name {
@@ -51,8 +52,13 @@
 }
 
 .movie__duration {
-  padding-top: 6px;
+  margin: 0;
   font-size: 11px;
   color: #8b8b8b;
-  border-top: 1px solid #424242;
+}
+
+@media screen and (max-width: 510px) {
+  .movie__name {
+    font-size: 12px;
+  }
 }
