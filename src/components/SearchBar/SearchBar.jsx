@@ -11,6 +11,7 @@ function SearchBar() {
             className="search-bar__input"
             type="text"
             placeholder="Фильм"
+            required
           />
           <button className="search-bar__button" type="submit" />
         </fieldset>

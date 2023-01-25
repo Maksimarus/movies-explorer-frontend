@@ -8,14 +8,14 @@ function SavedMovies() {
       <section className="movies">
         <SearchBar />
         <ul className="movies__list">
+          {/* <Movie />
           <Movie />
           <Movie />
           <Movie />
           <Movie />
           <Movie />
           <Movie />
-          <Movie />
-          <Movie />
+          <Movie /> */}
         </ul>
       </section>
     </Layout>

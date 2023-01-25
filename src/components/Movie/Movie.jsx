@@ -1,9 +1,10 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
-import movieImage from '../../images/movie-image.jpg';
 import './Movie.css';
+import { countDuration } from '../../utils/countDuration';
 
-function Movie() {
+function Movie({ nameRU, image, duration, trailerLink }) {
   const [isLiked, setIsLiked] = useState(false);
   const onLikeCard = () => {
     setIsLiked((prev) => !prev);
@@ -11,9 +12,20 @@ function Movie() {
 
   return (
     <li className="movie">
-      <img className="movie__image" src={movieImage} alt="Логотип фильма" />
+      <a
+        className="movie__link"
+        href={trailerLink}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          className="movie__image"
+          src={`https://api.nomoreparties.co/${image.url}`}
+          alt={image.name}
+        />
+      </a>
       <div className="movie__desc">
-        <p className="movie__name">33 слова о дизайне</p>
+        <p className="movie__name">{nameRU}</p>
         <button
           type="button"
           className={classNames('movie__like', { active: isLiked })}
@@ -34,9 +46,16 @@ function Movie() {
           </svg>
         </button>
       </div>
-      <p className="movie__duration">1ч42м</p>
+      <p className="movie__duration">{countDuration(duration)}</p>
     </li>
   );
 }
+
+Movie.propType = {
+  nameRU: PropTypes.string,
+  image: PropTypes.string,
+  duration: PropTypes.number,
+  trailerLink: PropTypes.string,
+};
 
 export default Movie;
