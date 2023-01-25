@@ -1,0 +1,12 @@
+.my-link {
+  color: inherit;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  background: none;
+  border: none;
+}
+
+.my-link:hover {
+  opacity: 0.5;
+}

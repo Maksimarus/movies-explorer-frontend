@@ -1,0 +1,122 @@
+.search-bar {
+  padding: 74px 0 47px 0;
+}
+
+.search-bar__form {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar__container {
+  margin: 0 0 32px 0;
+  padding: 0 0 8px 0;
+  border: none;
+  border-bottom: 1px solid #424242;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar__input {
+  flex: 1;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #fff;
+  font-size: 28px;
+  line-height: calc(34 / 28);
+  transition: background-color 0.3s ease;
+}
+
+.search-bar__input:hover {
+  background-color: #424242;
+}
+
+.search-bar__input::placeholder {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.search-bar__button {
+  height: 34px;
+  width: 34px;
+  border: none;
+  padding: 0;
+  margin-left: 46px;
+  background-color: #4285f4;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.search-bar__button:hover {
+  opacity: 0.5;
+}
+
+.search-bar__button:before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  display: block;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 13px;
+  right: 14px;
+}
+
+.search-bar__container_type_checkbox {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 950px) {
+  .search-bar {
+    padding-bottom: 60px;
+  }
+  .search-bar__container {
+    margin-bottom: 30px;
+  }
+  .search-bar__form {
+    margin-top: 80px;
+  }
+  .search-bar__checkbox {
+    align-self: flex-end;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .search-bar {
+    padding: 74px 4px 50px;
+  }
+  .search-bar__container {
+    margin-bottom: 40px;
+  }
+  .search-bar__input {
+    font-size: 22px;
+  }
+  .search-bar__input::placeholder {
+    font-size: 22px;
+  }
+  .search-bar__button {
+    margin-left: 30px;
+  }
+  .search-bar__checkbox {
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .search-bar__input {
+    font-size: 18px;
+  }
+  .search-bar__input::placeholder {
+    font-size: 18px;
+  }
+}

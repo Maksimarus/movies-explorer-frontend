@@ -1,0 +1,141 @@
+.about {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 110px 10px 110px;
+}
+
+.about__title {
+  margin: 0 0 70px 0;
+}
+
+.about__description {
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  margin-bottom: 110px;
+}
+
+.project-desc {
+  max-width: 550px;
+}
+
+.project-desc:not(:last-child) {
+  margin-right: 40px;
+}
+
+.project-desc__title {
+  font-size: 20px;
+  margin: 0 0 26px 0;
+}
+
+.project-desc__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: calc(20 / 14);
+}
+
+.table {
+  display: flex;
+}
+
+.table__item {
+  text-align: center;
+}
+
+.table__item_count_one {
+  flex: 1;
+}
+
+.table__item_count_four {
+  flex: 4;
+}
+
+.table__week {
+  padding: 9px 0;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.table__week_items_one {
+  background-color: #3ddc84;
+  color: #000;
+}
+
+.table__week_items_four {
+  background-color: #303030;
+  color: #fff;
+}
+
+.table__text {
+  margin: 0;
+  font-size: 14px;
+  color: #8b8b8b;
+}
+
+@media screen and (max-width: 950px) {
+  .about {
+    max-width: 668px;
+    padding: 90px 10px;
+  }
+  .about__description {
+    margin-bottom: 93px;
+  }
+  .project-desc:not(:last-child) {
+    margin-right: 30px;
+  }
+  .project-desc__title {
+    margin-bottom: 22px;
+  }
+  .project-desc__text {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .about {
+    max-width: 550px;
+    padding: 70px 10px;
+  }
+  .about__description {
+    flex-direction: column;
+    margin-bottom: 60px;
+  }
+  .project-desc:not(:last-child) {
+    margin: 0 0 56px 0;
+  }
+  .project-desc__title {
+    margin-bottom: 16px;
+  }
+  .about__title {
+    margin-bottom: 60px;
+  }
+  .table__item_count_four {
+    flex: 3;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .about {
+    max-width: 100%;
+    padding: 70px 18px;
+  }
+  .project-desc__title {
+    font-size: 18px;
+  }
+  .project-desc__text {
+    font-size: 11px;
+  }
+  .table__week {
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+  .table__text {
+    font-size: 11px;
+  }
+  .table__item_count_one {
+    min-width: 100px;
+  }
+  .table__item_count_four {
+    flex: 2;
+  }
+}

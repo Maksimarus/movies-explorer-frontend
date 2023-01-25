@@ -1,0 +1,10 @@
+.my-button {
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  background: none;
+}
+
+.my-button:hover {
+  opacity: 0.5;
+}

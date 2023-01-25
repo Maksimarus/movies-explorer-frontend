@@ -1,0 +1,64 @@
+.movie {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.movie__image {
+  margin-bottom: 14px;
+  object-fit: cover;
+}
+
+.movie__desc {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 25px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #424242;
+}
+
+.movie__name {
+  font-size: 13px;
+  margin: 0;
+}
+
+.movie__like {
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #313131;
+  border-radius: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.movie__like:hover {
+  opacity: 0.5;
+}
+.movie__like:hover .movie__like-icon {
+  transform: scale(2);
+}
+
+.movie__like-icon {
+  transform: translateY(1px);
+  transition: transform 0.3s ease;
+}
+
+.movie__like.active .movie__like-icon path {
+  fill: #ee3465;
+}
+
+.movie__duration {
+  margin: 0;
+  font-size: 11px;
+  color: #8b8b8b;
+}
+
+@media screen and (max-width: 510px) {
+  .movie__name {
+    font-size: 12px;
+  }
+}
