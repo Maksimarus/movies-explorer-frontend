@@ -1,13 +1,24 @@
+import classNames from 'classnames';
+import { useState } from 'react';
 import movieImage from '../../images/movie-image.jpg';
 import './Movie.css';
 
 function Movie() {
+  const [isLiked, setIsLiked] = useState(false);
+  const onLikeCard = () => {
+    setIsLiked((prev) => !prev);
+  };
+
   return (
     <li className="movie">
       <img className="movie__image" src={movieImage} alt="Логотип фильма" />
       <div className="movie__desc">
         <p className="movie__name">33 слова о дизайне</p>
-        <button type="button" className="movie__like">
+        <button
+          type="button"
+          className={classNames('movie__like', { active: isLiked })}
+          onClick={onLikeCard}
+        >
           <svg
             className="movie__like-icon"
             width="10"

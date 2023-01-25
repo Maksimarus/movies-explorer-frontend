@@ -16,11 +16,6 @@ function AuthNavigation() {
       <Burger onClickBurger={onClickBurger} isVisibleMenu={isVisibleMenu} />
       <ul className={classNames('menu', { active: isVisibleMenu })}>
         <li className="menu__item">
-          <NavLink className="menu__link" to="/">
-            Главная
-          </NavLink>
-        </li>
-        <li className="menu__item">
           <NavLink className="menu__link" to="/movies">
             Фильмы
           </NavLink>
