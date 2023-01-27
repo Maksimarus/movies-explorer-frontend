@@ -6,42 +6,43 @@ import Layout from '../../components/Layout/Layout';
 import Preloader from '../../components/UI/Preloader/Preloader';
 import MoviesApi from '../../utils/MoviesApi';
 import { useMoviesLimit } from '../../hooks/useMoviesLimit';
+import { filterMovieDuration } from '../../utils/filterMovieDuration';
+import { useFetching } from '../../hooks/useFetching';
+import ErrorMessage from '../../components/UI/ErrorMessage/ErrorMessage';
 
 function Movies() {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [filteredMovies, setFilteredMovies] = useState(movies);
   const { limit, setLimit, moviesCount } = useMoviesLimit();
+  const [getFilms, isLoading, error] = useFetching(async () => {
+    const films = await MoviesApi.getMovies();
+    setMovies(films);
+    setFilteredMovies(films);
+  });
   useEffect(() => {
-    const getFilms = async () => {
-      setIsLoading(true);
-      try {
-        const films = await MoviesApi.getMovies();
-        setMovies(films);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     getFilms();
   }, []);
 
   const showMoreFilms = () => {
     setLimit(limit + moviesCount);
   };
+  const filterMovies = (checked) => {
+    checked
+      ? setFilteredMovies(movies)
+      : setFilteredMovies(filterMovieDuration);
+  };
 
   return (
     <Layout>
       <section className="movies">
-        <SearchBar />
-        {isLoading ? (
-          <Preloader />
-        ) : (
-          <ul className="movies__list">
-            {movies.slice(0, limit).map((movie) => (
-              <Movie key={movie.id} {...movie} />
-            ))}
-          </ul>
-        )}
+        <SearchBar filterMovies={filterMovies} />
+        {error && <ErrorMessage />}
+        {isLoading && <Preloader />}
+        <ul className="movies__list">
+          {filteredMovies.slice(0, limit).map((movie) => (
+            <Movie key={movie.id} {...movie} />
+          ))}
+        </ul>
         <button
           onClick={showMoreFilms}
           className="movies__show-more-button"

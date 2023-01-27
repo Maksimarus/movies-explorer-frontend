@@ -1,8 +1,7 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import Checkbox from '../UI/Checkbox/Checkbox';
 import './SearchBar.css';
 
-function SearchBar() {
+function SearchBar({ filterMovies }) {
   return (
     <div className="search-bar">
       <form className="search-bar__form">
@@ -15,7 +14,10 @@ function SearchBar() {
           />
           <button className="search-bar__button" type="submit" />
         </fieldset>
-        <Checkbox className="search-bar__checkbox" />
+        <Checkbox
+          className="search-bar__checkbox"
+          filterMovies={filterMovies}
+        />
       </form>
     </div>
   );
