@@ -1,15 +1,13 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import './Checkbox.css';
 
-function Checkbox({ className, filterMovies }) {
-  const [isChecked, setIsChecked] = useState(false);
+function Checkbox({ className, isShort, setIsShort }) {
   const classes = classNames('checkbox', className);
-  const handleChange = () => {
-    filterMovies(isChecked);
-    setIsChecked((prev) => !prev);
+  const handleChange = (e) => {
+    setIsShort(e.target.checked);
   };
+
   return (
     <label className={classes} htmlFor="movie-type">
       <input
@@ -17,7 +15,7 @@ function Checkbox({ className, filterMovies }) {
         className="checkbox__input"
         id="movie-type"
         type="checkbox"
-        checked={isChecked}
+        checked={isShort}
       />
       <span className="checkbox__visible" />
       <span className="checkbox__text">Короткометражки</span>
