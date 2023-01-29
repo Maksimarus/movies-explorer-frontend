@@ -37,7 +37,6 @@
 
 .movie__like {
   border: none;
-  cursor: pointer;
   width: 24px;
   height: 24px;
   display: flex;
@@ -45,12 +44,8 @@
   align-items: center;
   background-color: #313131;
   border-radius: 50%;
-  transition: opacity 0.3s ease;
 }
 
-.movie__like:hover {
-  opacity: 0.5;
-}
 .movie__like:hover .movie__like-icon {
   transform: scale(2);
 }

@@ -10,11 +10,13 @@ import { filterMovies } from '../../utils/filterMovies';
 import { useFetching } from '../../hooks/useFetching';
 import ErrorMessage from '../../components/UI/ErrorMessage/ErrorMessage';
 import MyLocalStorage from '../../utils/LocalStorage';
+import { messages } from '../../utils/messages';
 
 function Movies() {
   const [movies, setMovies] = useState([]);
   const [isShort, setIsShort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [searchMessage, setSearchMessage] = useState(messages.inputFilmName);
   const { limit, setLimit, moviesCountAdd } = useMoviesLimit();
   const [getFilms, isLoading, error] = useFetching(async () => {
     const films = await MoviesApi.getMovies();
@@ -40,7 +42,6 @@ function Movies() {
     MyLocalStorage.setItem('isShort', isShort);
     MyLocalStorage.setItem('searchValue', searchValue);
   }, [movies, isShort, searchValue]);
-  console.log(MyLocalStorage.getItem('filteredFilms'));
   const showMoreFilms = () => {
     setLimit(limit + moviesCountAdd);
   };
@@ -48,6 +49,10 @@ function Movies() {
   const searchFilms = () => {
     const filteredMovies = filterMovies(localMovies, searchValue, isShort);
     setMovies(filteredMovies);
+    if (!movies.length) setSearchMessage(messages.filmsNotFound);
+  };
+  const likeFilm = (filmId) => {
+    console.log(filmId);
   };
 
   return (
@@ -66,20 +71,22 @@ function Movies() {
           {movies.length ? (
             movies
               .slice(0, limit)
-              .map((movie) => <Movie key={movie.id} {...movie} />)
+              .map((movie) => (
+                <Movie key={movie.id} likeFilm={likeFilm} {...movie} />
+              ))
           ) : (
-            <h2 className="movies__message">
-              Введите название фильма, который хотите найти.
-            </h2>
+            <h2 className="movies__message">{searchMessage}</h2>
           )}
         </ul>
-        <button
-          onClick={showMoreFilms}
-          className="movies__show-more-button"
-          type="button"
-        >
-          Ещё
-        </button>
+        {movies.length > limit && (
+          <button
+            onClick={showMoreFilms}
+            className="movies__show-more-button"
+            type="button"
+          >
+            Ещё
+          </button>
+        )}
       </section>
     </Layout>
   );
