@@ -4,7 +4,6 @@ import Movie from '../../components/Movie/Movie';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Layout from '../../components/Layout/Layout';
 import Preloader from '../../components/UI/Preloader/Preloader';
-import ErrorMessage from '../../components/UI/ErrorMessage/ErrorMessage';
 import MoviesApi from '../../api/MoviesApi';
 import { useMoviesLimit, useFetching } from '../../hooks';
 import { filterMovies, MyLocalStorage, messages } from '../../utils';
@@ -63,7 +62,9 @@ function Movies() {
           searchFilms={searchFilms}
         />
         {isLoading && <Preloader />}
-        {error && <ErrorMessage />}
+        {error && (
+          <h2 className="movie__error">{messages.defaultErrorMessage}</h2>
+        )}
         <ul className="movies__list">
           {movies.length ? (
             movies

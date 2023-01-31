@@ -5,9 +5,11 @@ class MainApi {
       'Content-Type': 'application/json',
     };
   }
+
   _responseHandler(res) {
     return res.ok ? res.json() : Promise.reject(res.status);
   }
+
   async register({ email, name, password }) {
     const res = await fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
@@ -20,6 +22,7 @@ class MainApi {
     });
     return this._responseHandler(res);
   }
+
   async login({ email, password }) {
     const res = await fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
@@ -32,22 +35,27 @@ class MainApi {
     });
     return this._responseHandler(res);
   }
-  logout() {
-    return this._request(`${this._baseUrl}/logout`, {
+
+  async logout() {
+    const res = await fetch(`${this._baseUrl}/logout`, {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
     });
+    return this._responseHandler(res);
   }
-  getMe() {
-    return this._request(`${this._baseUrl}/users/me`, {
+
+  async getMe() {
+    const res = await fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       credentials: 'include',
       headers: this._headers,
     });
+    return this._responseHandler(res);
   }
-  updateUserInfo({ name, email }) {
-    return this._request(`${this._baseUrl}/users/me`, {
+
+  async updateUserInfo({ name, email }) {
+    const res = await fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       credentials: 'include',
       headers: this._headers,
@@ -56,17 +64,19 @@ class MainApi {
         email,
       }),
     });
+    return this._responseHandler(res);
   }
 
-  getMyMovies() {
-    return this._request(`${this._baseUrl}/movie`, {
+  async getMyMovies() {
+    const res = await fetch(`${this._baseUrl}/movie`, {
       method: 'GET',
       credentials: 'include',
       headers: this._headers,
     });
+    return this._responseHandler(res);
   }
-  saveMyMovie(movie) {
-    return this._request(`${this._baseUrl}/movie`, {
+  async saveMyMovie(movie) {
+    const res = await fetch(`${this._baseUrl}/movie`, {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
@@ -74,13 +84,15 @@ class MainApi {
         ...movie,
       }),
     });
+    return this._responseHandler(res);
   }
-  deleteMyMovie(movieId) {
-    return this._request(`${this._baseUrl}/movie${movieId}`, {
+  async deleteMyMovie(movieId) {
+    const res = await fetch(`${this._baseUrl}/movie${movieId}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: this._headers,
     });
+    return this._responseHandler(res);
   }
 }
 

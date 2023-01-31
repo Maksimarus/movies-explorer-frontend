@@ -15,6 +15,15 @@
   justify-content: center;
 }
 
+.movie__error {
+  max-width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 24px;
+  text-align: center;
+  color: #fc0335;
+}
+
 .movies__message {
   font-size: 24px;
   text-align: center;
@@ -56,10 +65,16 @@
     padding-top: 40px;
     gap: 34px;
   }
+  .movie__error {
+    font-size: 18px;
+  }
 }
 
 @media screen and (max-width: 510px) {
   .movies {
     max-width: 100%;
+  }
+  .movie__error {
+    font-size: 12px;
   }
 }

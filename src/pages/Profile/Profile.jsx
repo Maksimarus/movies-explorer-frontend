@@ -1,8 +1,21 @@
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import MyButton from '../../components/UI/MyButton/MyButton';
 import Header from '../../components/Header/Header';
+import AuthContext from '../../contexts/AuthContext';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import MainApi from '../../api/MainApi';
 
 function Profile() {
+  const navigate = useNavigate();
+  const { setIsAuth } = useContext(AuthContext);
+  const { currentUser } = useContext(CurrentUserContext);
+
+  const logout = () => {
+    MainApi.logout();
+  };
+
   return (
     <>
       <Header />

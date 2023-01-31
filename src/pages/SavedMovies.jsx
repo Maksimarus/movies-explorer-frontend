@@ -3,9 +3,9 @@ import Movie from '../components/Movie/Movie';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Layout from '../components/Layout/Layout';
 import Preloader from '../components/UI/Preloader/Preloader';
-import ErrorMessage from '../components/UI/ErrorMessage/ErrorMessage';
 import MainApi from '../api/MainApi';
 import { useFetching } from '../hooks';
+import { messages } from '../utils';
 
 function SavedMovies() {
   const [movies, setMovies] = useState([]);
@@ -27,7 +27,9 @@ function SavedMovies() {
         <SearchBar />
         <ul className="movies__list">
           {isLoading && <Preloader />}
-          {error && <ErrorMessage />}
+          {error && (
+            <h2 className="movie__error">{messages.defaultErrorMessage}</h2>
+          )}
           {movies &&
             movies.map((movie) => (
               <Movie key={movie.id} deleteFilm={deleteFilm} {...movie} />
