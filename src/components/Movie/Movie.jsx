@@ -2,9 +2,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import './Movie.css';
-import { countDuration } from '../../utils/countDuration';
 import MyButton from '../UI/MyButton/MyButton';
-import { number } from 'prop-types';
+import { countDuration } from '../../utils';
 
 function Movie({
   nameRU,
@@ -94,7 +93,7 @@ function Movie({
 }
 
 Movie.propType = {
-  id: number,
+  id: PropTypes.number,
   nameRU: PropTypes.string,
   image: PropTypes.string,
   duration: PropTypes.number,

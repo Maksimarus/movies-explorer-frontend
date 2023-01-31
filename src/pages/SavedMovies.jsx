@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import Movie from '../components/Movie/Movie';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Layout from '../components/Layout/Layout';
-import MainApi from '../utils/MainApi';
-import { useFetching } from '../hooks/useFetching';
 import Preloader from '../components/UI/Preloader/Preloader';
 import ErrorMessage from '../components/UI/ErrorMessage/ErrorMessage';
+import MainApi from '../api/MainApi';
+import { useFetching } from '../hooks';
 
 function SavedMovies() {
   const [movies, setMovies] = useState([]);

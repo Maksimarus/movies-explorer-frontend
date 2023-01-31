@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useMoviesLimit = () => {
+const useMoviesLimit = () => {
   const [limit, setLimit] = useState(16);
   const [moviesCountAdd, setMoviesCountAdd] = useState(4);
   const [width, setWidth] = useState(window.innerWidth);
@@ -30,3 +30,5 @@ export const useMoviesLimit = () => {
 
   return { limit, setLimit, moviesCountAdd };
 };
+
+export default useMoviesLimit;

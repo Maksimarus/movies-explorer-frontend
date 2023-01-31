@@ -4,13 +4,10 @@ import Movie from '../../components/Movie/Movie';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Layout from '../../components/Layout/Layout';
 import Preloader from '../../components/UI/Preloader/Preloader';
-import MoviesApi from '../../utils/MoviesApi';
-import { useMoviesLimit } from '../../hooks/useMoviesLimit';
-import { filterMovies } from '../../utils/filterMovies';
-import { useFetching } from '../../hooks/useFetching';
 import ErrorMessage from '../../components/UI/ErrorMessage/ErrorMessage';
-import MyLocalStorage from '../../utils/LocalStorage';
-import { messages } from '../../utils/messages';
+import MoviesApi from '../../api/MoviesApi';
+import { useMoviesLimit, useFetching } from '../../hooks';
+import { filterMovies, MyLocalStorage, messages } from '../../utils';
 
 function Movies() {
   const [movies, setMovies] = useState([]);

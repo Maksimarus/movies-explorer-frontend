@@ -1,4 +1,4 @@
-export const filterMovies = (movies, searchValue, isShort) => {
+const filterMovies = (movies, searchValue, isShort) => {
   let filteredMovies = movies.filter((movie) =>
     movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
   );
@@ -7,3 +7,5 @@ export const filterMovies = (movies, searchValue, isShort) => {
   }
   return filteredMovies;
 };
+
+export default filterMovies;

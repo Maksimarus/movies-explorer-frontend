@@ -1,27 +1,27 @@
 class MainApi {
   constructor() {
-    this._baseUrl = 'https://api.bestfilm.maksimar.nomoredomains.club/';
+    this._baseUrl = 'https://api.bestfilm.maksimar.nomoredomains.club';
     this._headers = {
       'Content-Type': 'application/json',
     };
   }
   _responseHandler(res) {
-    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    return res.ok ? res.json() : Promise.reject(res.status);
   }
-  async register(email, password, name) {
-    const res = await fetch(`${this.baseUrl}/signup`, {
+  async register({ email, name, password }) {
+    const res = await fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
+        name,
         email,
         password,
-        name,
       }),
     });
     return this._responseHandler(res);
   }
-  async login(email, password) {
-    const res = await fetch(`${this.baseUrl}/signin`, {
+  async login({ email, password }) {
+    const res = await fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: this._headers,
       credentials: 'include',
@@ -33,21 +33,21 @@ class MainApi {
     return this._responseHandler(res);
   }
   logout() {
-    return this._request(`${this.baseUrl}/logout`, {
+    return this._request(`${this._baseUrl}/logout`, {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
     });
   }
   getMe() {
-    return this._request(`${this.baseUrl}/users/me`, {
+    return this._request(`${this._baseUrl}/users/me`, {
       method: 'GET',
       credentials: 'include',
       headers: this._headers,
     });
   }
-  updateUserInfo(name, email) {
-    return this._request(`${this.baseUrl}/users/me`, {
+  updateUserInfo({ name, email }) {
+    return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       credentials: 'include',
       headers: this._headers,
@@ -59,14 +59,14 @@ class MainApi {
   }
 
   getMyMovies() {
-    return this._request(`${this.baseUrl}/movie`, {
+    return this._request(`${this._baseUrl}/movie`, {
       method: 'GET',
       credentials: 'include',
       headers: this._headers,
     });
   }
   saveMyMovie(movie) {
-    return this._request(`${this.baseUrl}/movie`, {
+    return this._request(`${this._baseUrl}/movie`, {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
@@ -76,7 +76,7 @@ class MainApi {
     });
   }
   deleteMyMovie(movieId) {
-    return this._request(`${this.baseUrl}/movie${movieId}`, {
+    return this._request(`${this._baseUrl}/movie${movieId}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: this._headers,
