@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
@@ -14,17 +14,19 @@ import { messages } from '../../utils';
 import { userSchema } from '../../validation/validation';
 
 function Profile() {
+  const [successMessageState, setSuccessMessageState] = useState(false);
   const navigate = useNavigate();
   const { setIsAuth } = useContext(AuthContext);
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({ resolver: yupResolver(userSchema) });
   const [updateUser, isLoading, error] = useFetching(async (formData) => {
     const userInfo = await MainApi.updateUserInfo(formData);
     setCurrentUser(userInfo);
+    setSuccessMessageState(true);
   });
 
   const logout = async () => {
@@ -60,6 +62,11 @@ function Profile() {
               {...register('email')}
             />
           </label>
+          {successMessageState && (
+            <h2 className="profile__success-message">
+              Данные успешно изменены.
+            </h2>
+          )}
           <span
             className={classNames('my-input__error', 'profile__error', {
               active: errors.name,
@@ -81,7 +88,7 @@ function Profile() {
             <MyButton
               type="submit"
               className="profile-form__button"
-              disabled={isLoading}
+              disabled={!isValid || isLoading}
             >
               {isLoading ? 'Редактирование...' : 'Редактировать'}
             </MyButton>

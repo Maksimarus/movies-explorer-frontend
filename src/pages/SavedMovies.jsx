@@ -32,7 +32,8 @@ function SavedMovies() {
   };
 
   const searchFilms = () => {
-    const filteredMovies = filterMovies([...movies], searchValue, isShort);
+    const savedMovies = MyLocalStorage.getItem('savedMovies');
+    const filteredMovies = filterMovies(savedMovies, searchValue, isShort);
     setMovies(filteredMovies);
   };
 

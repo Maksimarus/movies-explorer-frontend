@@ -16,7 +16,7 @@ function App() {
       const me = await MainApi.getMe();
       setCurrentUser(me);
       setIsAuth(true);
-      navigate('/');
+      navigate('/movies');
     };
     handleAuth();
   }, [isAuth]);
