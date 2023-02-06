@@ -6,7 +6,13 @@ import Layout from '../../components/Layout/Layout';
 import Preloader from '../../components/UI/Preloader/Preloader';
 import MoviesApi from '../../api/MoviesApi';
 import { useMoviesLimit, useFetching } from '../../hooks';
-import { filterMovies, MyLocalStorage, messages } from '../../utils';
+import {
+  filterMovies,
+  MyLocalStorage,
+  messages,
+  adaptMovie,
+} from '../../utils';
+import MainApi from '../../api/MainApi';
 
 function Movies() {
   const [movies, setMovies] = useState([]);
@@ -14,16 +20,34 @@ function Movies() {
   const [searchValue, setSearchValue] = useState('');
   const [searchMessage, setSearchMessage] = useState(messages.inputFilmName);
   const { limit, setLimit, moviesCountAdd } = useMoviesLimit();
-  const [getFilms, isLoading, error] = useFetching(async () => {
-    const films = await MoviesApi.getMovies();
-    MyLocalStorage.setItem('films', films);
+  const [getFilms, isLoading, error] = useFetching(() => {
+    Promise.all([MoviesApi.getMovies(), MainApi.getMyMovies()]).then(
+      ([films, savedFilms]) => {
+        MyLocalStorage.setItem('films', films.map(adaptMovie));
+        MyLocalStorage.setItem('savedMovies', savedFilms);
+      }
+    );
   });
   const localMovies = MyLocalStorage.getItem('films');
 
+  const setLikeButtonState = (movies, savedMovies) => {
+    const savedMoviesIds = savedMovies.map((m) => m.movieId);
+    return movies.map((m) => {
+      if (savedMoviesIds.includes(m.movieId)) {
+        const intersected = savedMovies.find(
+          (movie) => movie.movieId === m.movieId
+        );
+        return { ...m, _id: intersected._id };
+      } else {
+        return m;
+      }
+    });
+  };
   useEffect(() => {
     if (!localMovies) {
       getFilms();
     }
+    const savedMovies = MyLocalStorage.getItem('savedMovies');
     const prevMovies = MyLocalStorage.getItem('filteredFilms');
     const localIsShort = MyLocalStorage.getItem('isShort');
     const localSearchValue = MyLocalStorage.getItem('searchValue');
@@ -32,23 +56,72 @@ function Movies() {
       setIsShort(localIsShort);
       setSearchValue(localSearchValue);
     }
+    if (prevMovies && savedMovies) {
+      setMovies(setLikeButtonState(prevMovies, savedMovies));
+    }
   }, []);
   useEffect(() => {
     MyLocalStorage.setItem('filteredFilms', movies);
     MyLocalStorage.setItem('isShort', isShort);
     MyLocalStorage.setItem('searchValue', searchValue);
   }, [movies, isShort, searchValue]);
+
   const showMoreFilms = () => {
     setLimit(limit + moviesCountAdd);
   };
-
   const searchFilms = () => {
+    const savedMovies = MyLocalStorage.getItem('savedMovies');
     const filteredMovies = filterMovies(localMovies, searchValue, isShort);
-    setMovies(filteredMovies);
+    setMovies(setLikeButtonState(filteredMovies, savedMovies));
     if (!movies.length) setSearchMessage(messages.filmsNotFound);
   };
-  const likeFilm = (filmId) => {
-    console.log(filmId);
+  const deleteMovie = async (_id) => {
+    try {
+      await MainApi.deleteMyMovie(_id);
+      const { _id: deletedId, ...deletedMovie } = [...movies].find(
+        (m) => m._id === _id
+      );
+      const newMoviesArray = [
+        ...movies.map((m) => {
+          if (m._id === deletedId) {
+            return deletedMovie;
+          }
+          return m;
+        }),
+      ];
+      setMovies(newMoviesArray);
+
+      const savedMovies = MyLocalStorage.getItem('savedMovies');
+      MyLocalStorage.setItem(
+        'savedMovies',
+        savedMovies.filter((m) => m._id !== _id)
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const saveMovie = async (movie) => {
+    try {
+      const { _id, ...movieToSave } = movie;
+      const savedMovie = await MainApi.saveMyMovie(movieToSave);
+      const newMoviesArray = [
+        ...movies.map((m) => {
+          if (m.movieId === savedMovie.movieId) {
+            return { ...m, _id: savedMovie._id };
+          }
+          return m;
+        }),
+      ];
+      setMovies(newMoviesArray);
+
+      const savedMovies = MyLocalStorage.getItem('savedMovies');
+      MyLocalStorage.setItem('savedMovies', [...savedMovies, savedMovie]);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const likeButtonHandler = (movie) => {
+    movie._id ? deleteMovie(movie._id) : saveMovie(movie);
   };
 
   return (
@@ -70,7 +143,12 @@ function Movies() {
             movies
               .slice(0, limit)
               .map((movie) => (
-                <Movie key={movie.id} likeFilm={likeFilm} {...movie} />
+                <Movie
+                  key={movie.movieId}
+                  likeButtonHandler={likeButtonHandler}
+                  deleteMovie={deleteMovie}
+                  movie={movie}
+                />
               ))
           ) : (
             <h2 className="movies__message">{searchMessage}</h2>

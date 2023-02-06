@@ -37,7 +37,7 @@ class MainApi {
   }
 
   async logout() {
-    const res = await fetch(`${this._baseUrl}/logout`, {
+    const res = await fetch(`${this._baseUrl}/signout`, {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
@@ -87,7 +87,7 @@ class MainApi {
     return this._responseHandler(res);
   }
   async deleteMyMovie(movieId) {
-    const res = await fetch(`${this._baseUrl}/movie${movieId}`, {
+    const res = await fetch(`${this._baseUrl}/movie/${movieId}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: this._headers,

@@ -32,7 +32,7 @@ function SearchBar({
         </fieldset>
         <Checkbox
           className="search-bar__checkbox"
-          isShort={isShort}
+          checked={isShort}
           setIsShort={setIsShort}
         />
       </form>

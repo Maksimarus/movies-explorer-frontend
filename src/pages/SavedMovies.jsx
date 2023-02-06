@@ -3,37 +3,65 @@ import Movie from '../components/Movie/Movie';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Layout from '../components/Layout/Layout';
 import Preloader from '../components/UI/Preloader/Preloader';
+import { MyLocalStorage, messages, filterMovies } from '../utils';
 import MainApi from '../api/MainApi';
 import { useFetching } from '../hooks';
-import { messages } from '../utils';
 
 function SavedMovies() {
   const [movies, setMovies] = useState([]);
-  const [getFilms, isLoading, error] = useFetching(async () => {
-    const savedMovies = await MainApi.getMyMovies();
-    setMovies(savedMovies);
+  const [isShort, setIsShort] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const savedMovies = MyLocalStorage.getItem('savedMovies');
+  const { getSavedMovies, isLoading, error } = useFetching(async () => {
+    const myMovies = await MainApi.getMyMovies();
+    setMovies(myMovies);
   });
   useEffect(() => {
-    getFilms();
+    savedMovies ? setMovies(savedMovies) : getSavedMovies();
   }, []);
 
-  const deleteFilm = (filmId) => {
-    console.log(filmId);
+  const deleteFilm = async (movieId) => {
+    try {
+      await MainApi.deleteMyMovie(movieId);
+      const newMoviesArray = [...movies].filter((m) => m._id !== movieId);
+      setMovies(newMoviesArray);
+      MyLocalStorage.setItem('savedMovies', newMoviesArray);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const searchFilms = () => {
+    const filteredMovies = filterMovies([...movies], searchValue, isShort);
+    setMovies(filteredMovies);
   };
 
   return (
     <Layout>
       <section className="movies">
-        <SearchBar />
+        <SearchBar
+          searchFilms={searchFilms}
+          isShort={isShort}
+          setIsShort={setIsShort}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
         <ul className="movies__list">
           {isLoading && <Preloader />}
           {error && (
             <h2 className="movie__error">{messages.defaultErrorMessage}</h2>
           )}
-          {movies &&
+          {movies?.length ? (
             movies.map((movie) => (
-              <Movie key={movie.id} deleteFilm={deleteFilm} {...movie} />
-            ))}
+              <Movie
+                key={movie.movieId}
+                deleteFilm={deleteFilm}
+                movie={movie}
+              />
+            ))
+          ) : (
+            <h2 className="movies__message">{messages.filmsNotFound}</h2>
+          )}
         </ul>
       </section>
     </Layout>
