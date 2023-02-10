@@ -17,3 +17,6 @@ export const publicRoutes = [
   { path: '/signin', component: Login },
   { path: '/signup', component: Register },
 ];
+
+export const privatePaths = privateRoutes.map((route) => route.path);
+export const publicPaths = publicRoutes.map((route) => route.path);

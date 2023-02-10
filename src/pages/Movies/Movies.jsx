@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './Movies.css';
 import Movie from '../../components/Movie/Movie';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -13,8 +13,11 @@ import {
   adaptMovie,
 } from '../../utils';
 import MainApi from '../../api/MainApi';
+import { errorMessages } from '../../validation/validation';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function Movies() {
+  const { currentUser } = useContext(CurrentUserContext);
   const [movies, setMovies] = useState([]);
   const [isShort, setIsShort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -24,7 +27,10 @@ function Movies() {
     Promise.all([MoviesApi.getMovies(), MainApi.getMyMovies()]).then(
       ([films, savedFilms]) => {
         MyLocalStorage.setItem('films', films.map(adaptMovie));
-        MyLocalStorage.setItem('savedMovies', savedFilms);
+        const mySavedMovies = savedFilms?.filter(
+          (m) => m.owner === currentUser._id
+        );
+        MyLocalStorage.setItem('savedMovies', mySavedMovies);
       }
     );
   });
@@ -136,7 +142,7 @@ function Movies() {
         />
         {isLoading && <Preloader />}
         {error && (
-          <h2 className="movie__error">{messages.defaultErrorMessage}</h2>
+          <h2 className="movie__error">{errorMessages.defaultErrorMessage}</h2>
         )}
         <ul className="movies__list">
           {movies.length ? (

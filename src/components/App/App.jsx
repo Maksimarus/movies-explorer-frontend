@@ -1,25 +1,39 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import NotFound from '../../pages/NotFound/NotFound';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import AuthContext from '../../contexts/AuthContext';
-import { commonRoutes, privateRoutes, publicRoutes } from '../../router';
+import {
+  commonRoutes,
+  privatePaths,
+  privateRoutes,
+  publicPaths,
+  publicRoutes,
+} from '../../router';
 import MainApi from '../../api/MainApi';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isAuth, setIsAuth] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     const handleAuth = async () => {
       const me = await MainApi.getMe();
       setCurrentUser(me);
       setIsAuth(true);
-      navigate('/movies');
     };
     handleAuth();
   }, [isAuth]);
+
+  useEffect(() => {
+    if (isAuth) {
+      publicPaths.includes(location.pathname) && navigate('/movies');
+    } else {
+      privatePaths.includes(location.pathname) && navigate('/');
+    }
+  }, [isAuth, location]);
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
@@ -35,17 +49,11 @@ function App() {
             ))}
             {isAuth
               ? privateRoutes.map((route) => (
-                  <>
-                    <Route
-                      key={route.path}
-                      path={route.path}
-                      element={<route.component />}
-                    />
-                    <Route
-                      path={route.path}
-                      element={<Navigate to={'/'} replace />}
-                    ></Route>
-                  </>
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<route.component />}
+                  />
                 ))
               : publicRoutes.map((route) => (
                   <Route

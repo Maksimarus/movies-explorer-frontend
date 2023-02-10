@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
@@ -10,20 +10,25 @@ import AuthContext from '../../contexts/AuthContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import MainApi from '../../api/MainApi';
 import { useFetching } from '../../hooks';
-import { messages } from '../../utils';
-import { userSchema } from '../../validation/validation';
+import { errorMessages, userSchema } from '../../validation/validation';
 
 function Profile() {
   const [successMessageState, setSuccessMessageState] = useState(false);
+  const [isIdenticalValues, setIsIdenticalValues] = useState(true);
   const navigate = useNavigate();
   const { setIsAuth } = useContext(AuthContext);
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
-  } = useForm({ resolver: yupResolver(userSchema) });
+  } = useForm({
+    defaultValues: { name: currentUser?.name, email: currentUser?.email },
+    resolver: yupResolver(userSchema),
+  });
   const [updateUser, isLoading, error] = useFetching(async (formData) => {
+    setIsIdenticalValues(true);
     const userInfo = await MainApi.updateUserInfo(formData);
     setCurrentUser(userInfo);
     setSuccessMessageState(true);
@@ -35,6 +40,25 @@ function Profile() {
     localStorage.clear();
     navigate('/');
   };
+  useEffect(() => {
+    if (successMessageState) {
+      setTimeout(() => {
+        setSuccessMessageState(false);
+      }, 2000);
+    }
+  }, [successMessageState]);
+  useEffect(() => {
+    const subscription = watch((values) => {
+      setIsIdenticalValues(
+        values.name === currentUser.name && values.email === currentUser.email
+      );
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, currentUser]);
+
+  const errorMessage = errorMessages[error?.toString()]
+    ? errorMessages[error.toString()]
+    : errorMessages.defaultErrorMessage;
 
   return (
     <>
@@ -48,7 +72,6 @@ function Profile() {
               id="name"
               type="text"
               className="profile-form__input"
-              defaultValue={currentUser?.name}
               {...register('name')}
             />
           </label>
@@ -58,7 +81,6 @@ function Profile() {
               id="name"
               type="text"
               className="profile-form__input"
-              defaultValue={currentUser?.email}
               {...register('email')}
             />
           </label>
@@ -81,14 +103,12 @@ function Profile() {
           >
             {errors.email && errors.email.message}
           </span>
-          {error && (
-            <h2 className="auth__error">{messages.defaultErrorMessage}</h2>
-          )}
+          {error && <h2 className="auth__error">{errorMessage}</h2>}
           <div className="profile-form__buttons">
             <MyButton
               type="submit"
               className="profile-form__button"
-              disabled={!isValid || isLoading}
+              disabled={isIdenticalValues || !isValid || isLoading}
             >
               {isLoading ? 'Редактирование...' : 'Редактировать'}
             </MyButton>

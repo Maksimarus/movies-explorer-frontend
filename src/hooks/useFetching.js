@@ -5,6 +5,7 @@ const useFetching = (callback) => {
   const [error, setError] = useState(null);
   const fetching = async (args) => {
     try {
+      setError(null);
       setIsLoading(true);
       await callback(args);
     } catch (e) {

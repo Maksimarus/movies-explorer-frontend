@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { RESOLUTIONS } from '../utils/constants';
 
 const useMoviesLimit = () => {
-  const [limit, setLimit] = useState(16);
-  const [moviesCountAdd, setMoviesCountAdd] = useState(4);
+  const [limit, setLimit] = useState(RESOLUTIONS.large.limit);
+  const [moviesCountAdd, setMoviesCountAdd] = useState(
+    RESOLUTIONS.large.append
+  );
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -11,18 +14,18 @@ const useMoviesLimit = () => {
         setWidth(window.innerWidth);
       }, 500);
     };
-    if (width > 1159) {
-      setLimit(16);
-      setMoviesCountAdd(4);
-    } else if (width > 950) {
-      setLimit(12);
-      setMoviesCountAdd(3);
-    } else if (width > 700) {
-      setLimit(8);
-      setMoviesCountAdd(2);
+    if (width > RESOLUTIONS.large.width) {
+      setLimit(RESOLUTIONS.large.limit);
+      setMoviesCountAdd(RESOLUTIONS.large.append);
+    } else if (width > RESOLUTIONS.middle.width) {
+      setLimit(RESOLUTIONS.middle.limit);
+      setMoviesCountAdd(RESOLUTIONS.middle.append);
+    } else if (width > RESOLUTIONS.small.width) {
+      setLimit(RESOLUTIONS.small.limit);
+      setMoviesCountAdd(RESOLUTIONS.small.append);
     } else {
-      setLimit(5);
-      setMoviesCountAdd(1);
+      setLimit(RESOLUTIONS.middle.limit);
+      setMoviesCountAdd(RESOLUTIONS.minimal.append);
     }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);

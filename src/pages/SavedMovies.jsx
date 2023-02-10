@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Movie from '../components/Movie/Movie';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Layout from '../components/Layout/Layout';
@@ -6,15 +6,19 @@ import Preloader from '../components/UI/Preloader/Preloader';
 import { MyLocalStorage, messages, filterMovies } from '../utils';
 import MainApi from '../api/MainApi';
 import { useFetching } from '../hooks';
+import { errorMessages } from '../validation/validation';
+import CurrentUserContext from '../contexts/CurrentUserContext';
 
 function SavedMovies() {
+  const { currentUser } = useContext(CurrentUserContext);
   const [movies, setMovies] = useState([]);
   const [isShort, setIsShort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const savedMovies = MyLocalStorage.getItem('savedMovies');
   const { getSavedMovies, isLoading, error } = useFetching(async () => {
     const myMovies = await MainApi.getMyMovies();
-    setMovies(myMovies);
+    const mySavedMovies = myMovies.filter((m) => m.owner === currentUser._id);
+    setMovies(mySavedMovies);
   });
   useEffect(() => {
     savedMovies ? setMovies(savedMovies) : getSavedMovies();
@@ -50,7 +54,9 @@ function SavedMovies() {
         <ul className="movies__list">
           {isLoading && <Preloader />}
           {error && (
-            <h2 className="movie__error">{messages.defaultErrorMessage}</h2>
+            <h2 className="movie__error">
+              {errorMessages.defaultErrorMessage}
+            </h2>
           )}
           {movies?.length ? (
             movies.map((movie) => (

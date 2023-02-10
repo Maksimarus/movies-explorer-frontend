@@ -4,7 +4,6 @@ import MyLink from '../UI/MyLink/MyLink';
 import logo from '../../images/icons/logo.svg';
 import MyButton from '../UI/MyButton/MyButton';
 import { errorMessages } from '../../validation/validation';
-import { messages } from '../../utils';
 
 function Auth({
   children,
@@ -29,7 +28,7 @@ function Auth({
         {children}
         {error && (
           <h2 className="auth__error">
-            {errorMessage || messages.defaultErrorMessage}
+            {errorMessage || errorMessages.defaultErrorMessage}
           </h2>
         )}
         <div className="auth__controls">
