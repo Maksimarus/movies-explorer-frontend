@@ -43,7 +43,6 @@ function Movie({ movie, likeButtonHandler, deleteFilm }) {
     movieButton = (
       <MyButton className="movie__like" onClick={onDeleteCard} type="button">
         <svg
-          // className="movie__like-icon"
           width="8"
           height="8"
           viewBox="0 0 8 8"
@@ -86,7 +85,7 @@ function Movie({ movie, likeButtonHandler, deleteFilm }) {
 
 Movie.propTypes = {
   movie: {
-    id: PropTypes.number,
+    _id: PropTypes.string,
     country: PropTypes.string,
     director: PropTypes.string,
     duration: PropTypes.number,
@@ -99,13 +98,13 @@ Movie.propTypes = {
     nameRU: PropTypes.string,
     nameEN: PropTypes.string,
   },
-  likeFilm: PropTypes.func,
+  likeButtonHandler: PropTypes.func,
   deleteFilm: PropTypes.func,
 };
 
 Movie.defaultProps = {
   movie: {
-    id: 1,
+    _id: '',
     nameRU: 'Фильм',
     image:
       'https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1718&q=80',
@@ -116,10 +115,10 @@ Movie.defaultProps = {
     year: 1000,
     description: '',
     thumbnail: '',
-    movieId: 1,
+    movieId: 0,
     nameEN: 'FIlm',
   },
-  likeFilm: null,
+  likeButtonHandler: null,
   deleteFilm: null,
 };
 

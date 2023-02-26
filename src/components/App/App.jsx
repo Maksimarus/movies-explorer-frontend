@@ -15,7 +15,7 @@ import MainApi from '../../api/MainApi';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
@@ -23,6 +23,7 @@ function App() {
       const me = await MainApi.getMe();
       setCurrentUser(me);
       setIsAuth(true);
+      localStorage.setItem('isAuth', true);
     };
     handleAuth();
   }, [isAuth]);

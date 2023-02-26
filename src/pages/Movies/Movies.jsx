@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import './Movies.css';
-import Movie from '../../components/Movie/Movie';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Layout from '../../components/Layout/Layout';
 import Preloader from '../../components/UI/Preloader/Preloader';
@@ -13,28 +12,27 @@ import {
   adaptMovie,
 } from '../../utils';
 import MainApi from '../../api/MainApi';
-import { errorMessages } from '../../validation/validation';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import MoviesCardList from '../../components/MoviesCardList/MoviesCardList';
 
 function Movies() {
   const { currentUser } = useContext(CurrentUserContext);
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(MyLocalStorage.getItem('filteredFilms'));
   const [isShort, setIsShort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [searchMessage, setSearchMessage] = useState(messages.inputFilmName);
   const { limit, setLimit, moviesCountAdd } = useMoviesLimit();
-  const [getFilms, isLoading, error] = useFetching(() => {
-    Promise.all([MoviesApi.getMovies(), MainApi.getMyMovies()]).then(
-      ([films, savedFilms]) => {
-        MyLocalStorage.setItem('films', films.map(adaptMovie));
-        const mySavedMovies = savedFilms?.filter(
-          (m) => m.owner === currentUser._id
-        );
-        MyLocalStorage.setItem('savedMovies', mySavedMovies);
-      }
+  const [getFilms, isLoading, error] = useFetching(async () => {
+    const [films, savedFilms] = await Promise.all([
+      MoviesApi.getMovies(),
+      MainApi.getMyMovies(),
+    ]);
+    MyLocalStorage.setItem('films', films.map(adaptMovie));
+    const mySavedMovies = savedFilms?.filter(
+      (m) => m.owner === currentUser._id
     );
+    MyLocalStorage.setItem('savedMovies', mySavedMovies);
   });
-  const localMovies = MyLocalStorage.getItem('films');
 
   const setLikeButtonState = (movies, savedMovies) => {
     const savedMoviesIds = savedMovies.map((m) => m.movieId);
@@ -45,25 +43,25 @@ function Movies() {
         );
         return { ...m, _id: intersected._id };
       } else {
+        delete m._id;
         return m;
       }
     });
   };
   useEffect(() => {
+    const localMovies = MyLocalStorage.getItem('films');
+    const savedMovies = MyLocalStorage.getItem('savedMovies');
+    const localIsShort = MyLocalStorage.getItem('isShort');
+    const localSearchValue = MyLocalStorage.getItem('searchValue');
     if (!localMovies) {
       getFilms();
     }
-    const savedMovies = MyLocalStorage.getItem('savedMovies');
-    const prevMovies = MyLocalStorage.getItem('filteredFilms');
-    const localIsShort = MyLocalStorage.getItem('isShort');
-    const localSearchValue = MyLocalStorage.getItem('searchValue');
-    if (prevMovies) {
-      setMovies(prevMovies);
+    if (movies) {
       setIsShort(localIsShort);
       setSearchValue(localSearchValue);
     }
-    if (prevMovies && savedMovies) {
-      setMovies(setLikeButtonState(prevMovies, savedMovies));
+    if (movies && savedMovies) {
+      setMovies(setLikeButtonState(movies, savedMovies));
     }
   }, []);
   useEffect(() => {
@@ -76,10 +74,11 @@ function Movies() {
     setLimit(limit + moviesCountAdd);
   };
   const searchFilms = () => {
+    const localMovies = MyLocalStorage.getItem('films');
     const savedMovies = MyLocalStorage.getItem('savedMovies');
     const filteredMovies = filterMovies(localMovies, searchValue, isShort);
     setMovies(setLikeButtonState(filteredMovies, savedMovies));
-    if (!movies.length) setSearchMessage(messages.filmsNotFound);
+    if (!movies?.length) setSearchMessage(messages.filmsNotFound);
   };
   const deleteMovie = async (_id) => {
     try {
@@ -140,27 +139,17 @@ function Movies() {
           setSearchValue={setSearchValue}
           searchFilms={searchFilms}
         />
-        {isLoading && <Preloader />}
-        {error && (
-          <h2 className="movie__error">{errorMessages.defaultErrorMessage}</h2>
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <MoviesCardList
+            movies={movies?.slice(0, limit)}
+            likeButtonHandler={likeButtonHandler}
+            error={error}
+            message={searchMessage}
+          />
         )}
-        <ul className="movies__list">
-          {movies.length ? (
-            movies
-              .slice(0, limit)
-              .map((movie) => (
-                <Movie
-                  key={movie.movieId}
-                  likeButtonHandler={likeButtonHandler}
-                  deleteMovie={deleteMovie}
-                  movie={movie}
-                />
-              ))
-          ) : (
-            <h2 className="movies__message">{searchMessage}</h2>
-          )}
-        </ul>
-        {movies.length > limit && (
+        {movies?.length > limit && (
           <button
             onClick={showMoreFilms}
             className="movies__show-more-button"

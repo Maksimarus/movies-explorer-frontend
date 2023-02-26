@@ -1,31 +1,33 @@
 import { useContext, useEffect, useState } from 'react';
-import Movie from '../components/Movie/Movie';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Layout from '../components/Layout/Layout';
 import Preloader from '../components/UI/Preloader/Preloader';
 import { MyLocalStorage, messages, filterMovies } from '../utils';
 import MainApi from '../api/MainApi';
 import { useFetching } from '../hooks';
-import { errorMessages } from '../validation/validation';
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import MoviesCardList from '../components/MoviesCardList/MoviesCardList';
 
 function SavedMovies() {
   const { currentUser } = useContext(CurrentUserContext);
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(MyLocalStorage.getItem('savedMovies'));
   const [isShort, setIsShort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  const savedMovies = MyLocalStorage.getItem('savedMovies');
-  const { getSavedMovies, isLoading, error } = useFetching(async () => {
+  const [getSavedMovies, isLoading, error] = useFetching(async () => {
     const myMovies = await MainApi.getMyMovies();
     const mySavedMovies = myMovies.filter((m) => m.owner === currentUser._id);
+    MyLocalStorage.setItem('savedMovies', mySavedMovies);
     setMovies(mySavedMovies);
   });
   useEffect(() => {
-    savedMovies ? setMovies(savedMovies) : getSavedMovies();
+    if (!movies) {
+      getSavedMovies();
+    }
   }, []);
 
   const deleteFilm = async (movieId) => {
     try {
+      console.log(movieId);
       await MainApi.deleteMyMovie(movieId);
       const newMoviesArray = [...movies].filter((m) => m._id !== movieId);
       setMovies(newMoviesArray);
@@ -40,7 +42,6 @@ function SavedMovies() {
     const filteredMovies = filterMovies(savedMovies, searchValue, isShort);
     setMovies(filteredMovies);
   };
-
   return (
     <Layout>
       <section className="movies">
@@ -51,25 +52,16 @@ function SavedMovies() {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
-        <ul className="movies__list">
-          {isLoading && <Preloader />}
-          {error && (
-            <h2 className="movie__error">
-              {errorMessages.defaultErrorMessage}
-            </h2>
-          )}
-          {movies?.length ? (
-            movies.map((movie) => (
-              <Movie
-                key={movie.movieId}
-                deleteFilm={deleteFilm}
-                movie={movie}
-              />
-            ))
-          ) : (
-            <h2 className="movies__message">{messages.filmsNotFound}</h2>
-          )}
-        </ul>
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <MoviesCardList
+            movies={movies}
+            error={error}
+            deleteFilm={deleteFilm}
+            message={messages.filmsNotFound}
+          />
+        )}
       </section>
     </Layout>
   );
