@@ -1,15 +1,15 @@
-import './App.css';
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import './App.css';
 import NotFound from '../../pages/NotFound/NotFound';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import AuthContext from '../../contexts/AuthContext';
 import {
   commonRoutes,
-  privatePaths,
+  publicRoutes,
   privateRoutes,
   publicPaths,
-  publicRoutes,
+  privatePaths,
 } from '../../router';
 import MainApi from '../../api/MainApi';
 

@@ -1,17 +1,14 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './Movie.css';
 import MyButton from '../UI/MyButton/MyButton';
 import { countDuration } from '../../utils';
-import { useLocation } from 'react-router-dom';
 
 function Movie({ movie, likeButtonHandler, deleteFilm }) {
   const location = useLocation();
-  const [isLiked, setIsLiked] = useState(!!movie._id);
   const onLikeCard = () => {
     likeButtonHandler(movie);
-    setIsLiked((prev) => !prev);
   };
   const onDeleteCard = () => {
     deleteFilm(movie._id);
@@ -20,7 +17,7 @@ function Movie({ movie, likeButtonHandler, deleteFilm }) {
   if (location.pathname === '/movies') {
     movieButton = (
       <MyButton
-        className={classNames('movie__like', { active: isLiked })}
+        className={classNames('movie__like', { active: !!movie._id })}
         onClick={onLikeCard}
         type="button"
       >
@@ -118,8 +115,8 @@ Movie.defaultProps = {
     movieId: 0,
     nameEN: 'FIlm',
   },
-  likeButtonHandler: null,
-  deleteFilm: null,
+  likeButtonHandler: () => {},
+  deleteFilm: () => {},
 };
 
 export default Movie;

@@ -27,9 +27,8 @@ function SavedMovies() {
 
   const deleteFilm = async (movieId) => {
     try {
-      console.log(movieId);
       await MainApi.deleteMyMovie(movieId);
-      const newMoviesArray = [...movies].filter((m) => m._id !== movieId);
+      const newMoviesArray = movies.filter((m) => m._id !== movieId);
       setMovies(newMoviesArray);
       MyLocalStorage.setItem('savedMovies', newMoviesArray);
     } catch (e) {
