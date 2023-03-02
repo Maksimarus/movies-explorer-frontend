@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Movies.css';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Layout from '../../components/Layout/Layout';
@@ -12,11 +12,9 @@ import {
   adaptMovie,
 } from '../../utils';
 import MainApi from '../../api/MainApi';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
 import MoviesCardList from '../../components/MoviesCardList/MoviesCardList';
 
 function Movies() {
-  const { currentUser } = useContext(CurrentUserContext);
   const [movies, setMovies] = useState(MyLocalStorage.getItem('filteredFilms'));
   const [isShort, setIsShort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -28,6 +26,7 @@ function Movies() {
       MainApi.getMyMovies(),
     ]);
     MyLocalStorage.setItem('films', films.map(adaptMovie));
+    const currentUser = MyLocalStorage.getItem('user');
     const mySavedMovies = savedFilms?.filter(
       (m) => m.owner === currentUser._id
     );

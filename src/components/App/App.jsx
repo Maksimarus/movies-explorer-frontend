@@ -12,18 +12,21 @@ import {
   privatePaths,
 } from '../../router';
 import MainApi from '../../api/MainApi';
+import { MyLocalStorage } from '../../utils';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
+  const [isAuth, setIsAuth] = useState(MyLocalStorage.getItem('isAuth'));
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
+    if (!isAuth) return;
     const handleAuth = async () => {
       const me = await MainApi.getMe();
       setCurrentUser(me);
       setIsAuth(true);
-      localStorage.setItem('isAuth', true);
+      MyLocalStorage.setItem('user', me);
+      MyLocalStorage.setItem('isAuth', true);
     };
     handleAuth();
   }, [isAuth]);

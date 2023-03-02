@@ -11,13 +11,15 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 import MainApi from '../../api/MainApi';
 import { useFetching } from '../../hooks';
 import { errorMessages, userSchema } from '../../validation/validation';
+import { MyLocalStorage } from '../../utils';
 
 function Profile() {
   const [successMessageState, setSuccessMessageState] = useState(false);
   const [isIdenticalValues, setIsIdenticalValues] = useState(true);
   const navigate = useNavigate();
   const { setIsAuth } = useContext(AuthContext);
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { setCurrentUser } = useContext(CurrentUserContext);
+  const currentUser = MyLocalStorage.getItem('user');
   const {
     register,
     handleSubmit,
@@ -30,6 +32,7 @@ function Profile() {
   const [updateUser, isLoading, error] = useFetching(async (formData) => {
     setIsIdenticalValues(true);
     const userInfo = await MainApi.updateUserInfo(formData);
+    MyLocalStorage.setItem('user', userInfo);
     setCurrentUser(userInfo);
     setSuccessMessageState(true);
   });
