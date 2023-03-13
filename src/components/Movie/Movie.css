@@ -4,14 +4,28 @@
   color: #fff;
 }
 
-.movie__image {
+.movie__link {
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
   margin-bottom: 14px;
+}
+
+.movie__link:hover {
+  opacity: 0.6;
+}
+
+.movie__image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .movie__desc {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: 25px;
   margin-bottom: 6px;
   border-bottom: 1px solid #424242;
@@ -24,7 +38,6 @@
 
 .movie__like {
   border: none;
-  cursor: pointer;
   width: 24px;
   height: 24px;
   display: flex;
@@ -32,12 +45,8 @@
   align-items: center;
   background-color: #313131;
   border-radius: 50%;
-  transition: opacity 0.3s ease;
 }
 
-.movie__like:hover {
-  opacity: 0.5;
-}
 .movie__like:hover .movie__like-icon {
   transform: scale(2);
 }

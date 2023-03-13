@@ -45,6 +45,13 @@
   color: #fff;
 }
 
+.auth__button:disabled {
+  cursor: auto;
+  opacity: 0.5;
+  background-color: transparent;
+  border: 1px solid #4285f4;
+}
+
 .auth__text {
   padding: 0;
   margin: 0;
@@ -56,6 +63,16 @@
 .auth__link {
   margin-left: 6px;
   color: #4285f4;
+}
+
+.auth__error {
+  max-width: 100%;
+  margin: 0 auto 20px;
+  padding: 0 10px;
+  color: #fc0335;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
 }
 
 @media screen and (max-width: 510px) {
@@ -78,6 +95,9 @@
     font-size: 12px;
   }
   .auth__text {
+    font-size: 12px;
+  }
+  .auth__error {
     font-size: 12px;
   }
 }

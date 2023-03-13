@@ -1,26 +1,76 @@
+import { useEffect, useState } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import Main from '../../pages/Main';
-import Movies from '../../pages/Movies/Movies';
-import SavedMovies from '../../pages/SavedMovies';
-import Profile from '../../pages/Profile/Profile';
-import Login from '../../pages/Login';
-import Register from '../../pages/Register';
 import NotFound from '../../pages/NotFound/NotFound';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import AuthContext from '../../contexts/AuthContext';
+import {
+  commonRoutes,
+  publicRoutes,
+  privateRoutes,
+  publicPaths,
+  privatePaths,
+} from '../../router';
+import MainApi from '../../api/MainApi';
+import { MyLocalStorage } from '../../utils';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState({});
+  const [isAuth, setIsAuth] = useState(MyLocalStorage.getItem('isAuth'));
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    if (!isAuth) return;
+    const handleAuth = async () => {
+      const me = await MainApi.getMe();
+      setCurrentUser(me);
+      setIsAuth(true);
+      MyLocalStorage.setItem('user', me);
+      MyLocalStorage.setItem('isAuth', true);
+    };
+    handleAuth();
+  }, [isAuth]);
+
+  useEffect(() => {
+    if (isAuth) {
+      publicPaths.includes(location.pathname) && navigate('/movies');
+    } else {
+      privatePaths.includes(location.pathname) && navigate('/');
+    }
+  }, [isAuth, location]);
+
   return (
-    <div className="app">
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/signin" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+        <div className="app">
+          <Routes>
+            {commonRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<route.component />}
+              />
+            ))}
+            {isAuth
+              ? privateRoutes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<route.component />}
+                  />
+                ))
+              : publicRoutes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<route.component />}
+                  />
+                ))}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </AuthContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 

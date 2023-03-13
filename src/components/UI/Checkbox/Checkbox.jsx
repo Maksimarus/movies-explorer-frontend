@@ -2,12 +2,21 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './Checkbox.css';
 
-function Checkbox({ className }) {
+function Checkbox({ className, checked, setIsShort }) {
   const classes = classNames('checkbox', className);
+  const handleChange = (e) => {
+    setIsShort(e.target.checked);
+  };
 
   return (
     <label className={classes} htmlFor="movie-type">
-      <input className="checkbox__input" id="movie-type" type="checkbox" />
+      <input
+        onChange={handleChange}
+        className="checkbox__input"
+        id="movie-type"
+        type="checkbox"
+        checked={checked}
+      />
       <span className="checkbox__visible" />
       <span className="checkbox__text">Короткометражки</span>
     </label>

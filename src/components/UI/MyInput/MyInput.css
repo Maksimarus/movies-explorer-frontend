@@ -4,7 +4,7 @@
 }
 
 .my-input:not(:last-child) {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .my-input__label {
@@ -27,4 +27,16 @@
 
 .my-input__input:hover {
   opacity: 0.5;
+}
+
+.my-input__error {
+  opacity: 0;
+  height: 10px;
+  color: #ee3465;
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.my-input__error.active {
+  opacity: 1;
 }

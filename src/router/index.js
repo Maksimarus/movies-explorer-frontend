@@ -1,9 +1,11 @@
-import Main from '../pages/Main/Main';
-import Login from '../pages/Login/Login';
-import Register from '../pages/Register/Register';
+import Main from '../pages/Main';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
 import Movies from '../pages/Movies/Movies';
-import SavedMovies from '../pages/SavedMovies/SavedMovies';
+import SavedMovies from '../pages/SavedMovies';
 import Profile from '../pages/Profile/Profile';
+
+export const commonRoutes = [{ path: '/', component: Main }];
 
 export const privateRoutes = [
   { path: '/movies', component: Movies },
@@ -12,7 +14,9 @@ export const privateRoutes = [
 ];
 
 export const publicRoutes = [
-  { path: '/', component: Main },
   { path: '/signin', component: Login },
   { path: '/signup', component: Register },
 ];
+
+export const privatePaths = privateRoutes.map((route) => route.path);
+export const publicPaths = publicRoutes.map((route) => route.path);
